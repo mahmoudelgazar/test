@@ -1,0 +1,73 @@
+$font:arial;
+$font-size:14px;
+$background:#000; 
+@mixin transitprops ($val) {
+    opacity: $val;
+    transform: scale($val)
+}
+@mixin fonts {
+    font: {
+        family:$font;
+        size:$font-size;
+    }
+}
+@mixin  transit ($props...){
+    -webkit-transition: $props;
+    transition: $props;
+}
+
+@mixin colr($cs: red) {
+    border: 1px solid $cs;
+    @content;
+}
+
+body {
+   background:#fff; 
+   @include fonts();
+   @include transitprops (1);
+   @include transit (opacity 0.2 , transform 0.4s);
+}
+
+.clr-class {
+    @include colr(blue) {
+        color:#ccc;
+    };
+}
+
+
+// loop
+$pages: 'home' , 'product' , 'blog' , 'contact';
+@each $pg in $pages {
+    body##{$pg} li.#{$pg} a{
+        font-weight: 900;
+        color:$background;
+    }
+}
+
+h1 {
+    color:#000;
+}
+h1 span  {
+    color:red;
+    &:hover {
+        color:#000
+    }
+    &:active {
+        color:#000
+    }
+}
+div {
+    color: aqua;
+}
+.body {
+    background:lighten($background , 40%); 
+    @include fonts();
+    @include transitprops (1);
+    @include transit (opacity 0.2 , transform 0.4s);
+}
+.block {
+    font-family: $font;
+    @extend .body;
+    color: aqua;
+}
+
